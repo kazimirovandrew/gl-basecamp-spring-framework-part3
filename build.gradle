@@ -1,0 +1,63 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-cargo-plugin:2.6.1'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'com.basecamp'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'com.bmuschko.cargo'
+
+cargo {
+    containerId = 'tomcat8x'
+    port = 8080
+
+    deployable{
+        context = "guess_number"
+        file = file('build/libs/guess_number-1.0-SNAPSHOT.war')
+    }
+
+    local {
+        homeDir = file('D:/apache-tomcat-8.5.38')
+    }
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.6'
+    
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '5.1.5.RELEASE'
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    compile group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
+
+    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.1.5.RELEASE'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.1.Final'
+    compile group: 'com.h2database', name: 'h2', version: '1.4.199'
+
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
+    compile group: 'com.jayway.jsonpath', name: 'json-path', version: '2.4.0'
+
+    compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+    compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.16.Final'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.springframework', name: 'spring-test', version: '5.1.5.RELEASE'
+    
+    testCompile group: 'org.apache.tomcat', name: 'tomcat-el-api', version: '8.5.38'
+    testCompile group: 'org.apache.tomcat', name: 'tomcat-jasper-el', version: '8.5.38'
+}
