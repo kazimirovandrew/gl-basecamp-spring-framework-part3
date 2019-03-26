@@ -39,10 +39,9 @@ public class GameServiceTest {
         int guess = 50;
 
         //when
-        gameService.isGameWon(id, guess);
+        String result = gameService.isGameWon(id, guess).getResult();
 
         //then
-        String result = gameService.getResult();
         assertTrue("Winner!".equals(result) || "Looser!".equals(result));
     }
 }
